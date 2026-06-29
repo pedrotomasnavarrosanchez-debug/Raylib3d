@@ -5,15 +5,18 @@
             "label": "Build Raylib",
             "type": "shell",
             "command": "make",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
+            "group": "build",
+            "problemMatcher": []
         },
         {
             "label": "Run Raylib",
             "type": "shell",
-            "command": "make run"
+            "command": "make run",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
         }
     ]
 }
