@@ -22,3 +22,4 @@ run: all
 
 clean:
 	rm -rf bin
+	mkdir -p bin

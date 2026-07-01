@@ -29,11 +29,11 @@ Durante la instalación, se recomienda marcar:
 
 ## Comprobar instalación
 
-1. Para abrir un terminal PowerShell, pulsamos la tecla de Windows (o pulsamos en inicio) y escribimos power.
+1. Para abrir un terminal PowerShell, pulsamos la tecla de Windows (o pulsamos en inicio) o en la barra de busquedad inferior y escribimos "power".
 
 ![alt text](img/AbrirPowerWindows.png)
 
-1. escribiendo esto en la terminal:
+2. escribiendo esto en la terminal:
 
 ```powerShell
 code
@@ -41,7 +41,7 @@ code
 
 ![imagen del terminal PowerShell](img/powerShell.png)
 
-1. Si está instalado, se abrirá el programa Visual Studio Code.
+3. Si está instalado, se abrirá el programa **Visual Studio Code**.
 
 ![alt text](img/VsCodeOpen.png)
 ---
@@ -54,9 +54,7 @@ Descargar desde:
 
 <https://github.com/msys2/msys2-installer/releases/download/2026-06-11/msys2-x86_64-20260611.exe>
 
-![alt text](img/MSYS2.png)
-
-Instalar en la ruta por defecto:
+Instalar en la ruta por **defecto**:
 
 ```text
 C:\msys64
@@ -66,36 +64,32 @@ C:\msys64
 
 # Paso 3 — Actualizar MSYS2 MINGW64
 
-**Abrir**:
+## Abrir:
 
-Para abrir MSYS2 MINGW64, pulsamos la tecla de Windows (o pulsamos en inicio) y escribimos "MSYS2 MINGW64".
+Para abrir **MSYS2 MINGW64**, pulsamos la tecla de Windows (o pulsamos en inicio, o en la barra de busqueda inferior) y escribimos "MSYS2 MINGW64". 
+
+**NOTA**: Es importante fijarse en abrir la aplicación indicada, no otras con nombres similares.
 
 ![alt text](img/MSYS2_MINGW64.png)
 
-**Ejecutar**:
+**NOTA**: Para poder pegar el texto en este terminal, usamos click derecho y seleccionamos "paste".
 
-![alt text](img/MSYS2_MINGW64_Terminal.png)
+## Ejecutar:
 
 ```bash
 pacman -Syu --noconfirm
 ```
+![alt text](img/MSYS2_MINGW64_Terminal.png)
 
-Puede pedir confirmaciones, escribimos "y" y pulsamos enter. Puede pedir cerrar la terminal y volver a abrirla.
+Ejecutar nuevamente, hasta que no queden actualizaciones pendientes.
 
-![alt text](img/terminalMSYS2_ConfirmeY.png)
-
-Después ejecutar nuevamente:
-
-```bash
-pacman -Syu
-```
-
-hasta que no queden actualizaciones pendientes.
+![alt text](img/SyuComplete.png)
 
 ---
 
 # Paso 4 — Instalar compilador C++, make y Raylib
 
+## Instalar
 En la terminal **MSYS2 MINGW64** ejecutar:
 
 ```bash
@@ -103,6 +97,8 @@ pacman -S --noconfirm --needed mingw-w64-x86_64-toolchain
 pacman -S --noconfirm --needed make
 pacman -S --noconfirm --needed mingw-w64-x86_64-raylib
 ```
+
+![alt text](img/InstallGcc.png)
 
 Esto instala:
 
@@ -116,7 +112,7 @@ Esto instala:
 ## Comprobar instalación
 
 ```bash id="m2"
-echo "=== G++ VERSION ===" && g++ --version
+echo -e "\n=== G++ VERSION ===" && g++ --version
 echo -e "\n=== MAKE VERSION ===" && make --version
 echo -e "\n=== RAYLIB VERSION ===" && pkg-config --modversion raylib
 ```
@@ -127,7 +123,7 @@ devería aparecer algo como esto:
 
 ---
 
-# Paso 5 — Añadir compilador al PATH (opcional pero recomendado)
+# Paso 5 — Añadir compilador al PATH de Windows
 
 ## Añadir al PATH del sistema
 
@@ -135,17 +131,21 @@ devería aparecer algo como esto:
 C:\msys64\mingw64\bin
 ```
 
-Para ello, abrimos una terminal de **PowerShell** tal y como se muestra a continuación:
+Para ello, abrimos una terminal de **PowerShell** tal y como se indicó anteriormente:
 
-Y pegamos:
+![alt text](img/AbrirPowerWindows.png)
+
+Y pegamos y pulsamos enter:
 
 ```powershell
 [Environment]::SetEnvironmentVariable("Path", [Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine) + ";C:\msys64\mingw64\bin", [EnvironmentVariableTarget]::Machine)
 ```
 
-## Para comprobar
+![alt text](img/PowerShellPath.png)
 
-Escribimos en PowerShell:
+## Para comprobar que funciona correctamente
+
+Escribimos en **PowerShell**:
 
 ```bash
 g++ --version
@@ -179,7 +179,41 @@ Para visualizar errores directamente en el editor.
 
 ---
 
-# Paso 7 - Configurar para usar la terminal correcta en VSCode
+# Paso 7 - Añadir git a VSCode
+
+## descargar e intalasar git 
+https://github.com/git-for-windows/git/releases/download/v2.55.0.windows.1/Git-2.55.0-64-bit.exe
+
+Tras la instalación, cerrar y volver a abrir Visual Studio Code. Nos debe aparecer estas opciones si está correctamente instalado:
+
+![alt text](img/VisualStudioGit.png)
+
+## Registrarse en Github
+
+https://docs.github.com/es/get-started/start-your-journey/creating-an-account-on-github#signing-up-for-a-new-personal-account
+
+## Hacer un fork del proyecto
+
+Esto significa crear una copia que depende del proyecto principal (En este caso) sobre la que podemos trabajar por nuestra cuenta.
+
+1. pulsamos en Fork
+![alt text](img/fork/pulsarFork.png)
+
+2. Completamos la creación en nuestra copia del repositorio en nuestra cuenta de github.
+![alt text](img/fork/crearFork.png)
+
+## Clonar el repositorio en VSCode
+
+En Github, en nuestro nuevo fork del repositorio, copiamos la url:
+![alt text](img/fork/copiarUrlFork.png)
+
+vamos a **Visual Studio Code** y pulsamos en la opción de clonar
+
+![alt text](img/VisualStudioGit.png)
+
+---
+
+# Paso 8 - Configurar para usar la terminal correcta en VSCode
 
 vamos a [configurar](vscode://settings/terminal.integrated.profiles.windows) y pulsamos en el botón que indica la imagen:
 
@@ -200,8 +234,22 @@ Ahí, añadimos al final el siguiente texto:
 
 ![alt text](img/añadirRutaTerminal.png)
 
-Modificamos el terminal por defecto:
+## Modificamos el terminal por defecto:
+Podemos modificar que terminal por defecto usará Visual Studio Code. Tenemos dos alternativas para configurarlo, de forma visual o manual.
 
+### De forma Visual
+Abrimos la terminal, si no está ya abierta (Atajo: **Ctrl + ñ**)
+![alt text](img/openTerminal.png)
+
+Pulsamos en la flecha, para seleccionar la opción de "*select default profile*":
+
+![alt text](img/openTerminalDefault.png)
+
+Elegimos "*MSYS2 MINGW64*":
+
+![alt text](img/selecTerminalDefault.png)
+
+### De forma Manual
 ```JSON
 "MSYS2 MINGW64"
 ```
@@ -213,11 +261,13 @@ Modificamos el terminal por defecto:
     "terminal.integrated.defaultProfile.windows": "MSYS2 MINGW64"
 ```
 
-# Paso 8 — Compilar
+---
+
+# Paso 9 — Compilar
 
 ## Con Make
 
-Para compilar directamente usando Make, en un terminar (en la ruta del proyecto) escribimos:
+Para compilar directamente usando Make, en el terminar de **Visual Studio Code** (en la ruta del proyecto) escribimos:
 
 ```bash
 make
@@ -225,35 +275,40 @@ make
 
 ![alt text](img/CompilarConMake.png)
 
+![alt text](img/CompilarConMake_Resultado.png)
+
 ## Manualmente
 
 Desde terminal :
 
 ```bash
-g++ src/main.cpp -o game -lraylib -lopengl32 -lgdi32 -lwinmm
+g++ src/main.cpp -o bin/game -lraylib -lopengl32 -lgdi32 -lwinmm
 ```
+
+![alt text](img/CompilacionManual_Resultado.png)
 
 ---
 
-# Paso 9 — Ejecutar
-
+# Paso 10 — Ejecutar
+Para ejecutar directamente usando Make, en el terminar de **Visual Studio Code** (en la ruta del proyecto) escribimos:
 ## Con Make
 
 ```bash
 make run
 ```
+![alt text](img/EjecutarConMake.png)
 
+![alt text](img/Run_Resultado.png)
 ## Manualmente
 
 Ejecutar:
 
 ```bash
-./game.exe
+./bin/game.exe
 ```
+![alt text](img/EjecutarManualmente.png)
 
 Si todo ha ido bien, aparecerá una ventana con:
-
-![alt text](img/Run.png)
 
 ---
 
@@ -297,6 +352,11 @@ Comprobar flags:
 -lraylib -lopengl32 -lgdi32 -lwinmm
 ```
 
+## Error al ejecutar el .exe
+"*No se encuentra la libreria Raylib*"
+
+Seguramente nos hemos añadido el PATH.
+
 ---
 
 # Entorno listo
@@ -311,6 +371,5 @@ Si todo funciona correctamente, ya se puede comenzar a desarrollar videojuegos 2
 
 Durante este curso:
 
-- Usaremos siempre MINGW64
-- Todo el código se compila con make
-- No se usan comandos largos de g++
+- Usaremos siempre la terminal de Visual Studio Code (MINGW64)
+- Todo el código se compila y ejecuta con make
