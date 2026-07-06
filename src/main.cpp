@@ -1,5 +1,5 @@
 #include "raylib.h"
-
+#include "raymath.h"
 // Constantes de Configuración de la Ventana
 #define SCREEN_WIDTH 800  // Ancho de la ventana en píxeles
 #define SCREEN_HEIGHT 600 // Alto de la ventana en píxeles
@@ -36,20 +36,47 @@ int main()
     camera.projection = CAMERA_PERSPECTIVE; // Perspectiva real: objetos lejanos se ven más pequeños
 
     // Establece el objetivo de fotogramas por segundo de la ventana
-    SetTargetFPS(MAX_FPS);
+   
+SetTargetFPS(MAX_FPS);
+// Objetos del entorno
+Vector3 posicionCubo = CUBE_POSITION;
 
-    while (!WindowShouldClose())
+
+// TIPO VARIABLE NOMBRE;
+//TIPO VARIABLE NOMBRE = {1,2,3};
+  
+while (!WindowShouldClose())
     {
         // =========================================================================
         // 1. SECCIÓN DE ENTRADA (Capturar lo que hace el usuario)
         // =========================================================================
+    if(IsKeyDown(KEY_A))
+    {
+        posicionCubo = Vector3Add(posicionCubo, {-1.0f, 0.0f, 0.0f}); // Posicion actual, la desplazamos  
+    }
+    if(IsKeyDown(KEY_D))  
+    {
+    posicionCubo = Vector3Add(posicionCubo, {1.0f, 0.0f, 0.0f}); // Posicion actual, la desplazamos
+    }
+   if(IsKeyDown(KEY_W))
+    {
+        posicionCubo = Vector3Add(posicionCubo, {0,  0,  -1}); // Posicion actual, la desplazamos  
+    }
+     if(IsKeyDown(KEY_S))
+    {
+         posicionCubo = Vector3Add(posicionCubo, {0,  0,  1}); // Posicion actual, la desplazamos  
+    }
+     if(IsKeyPressed(KEY_SPACE))
+    {
+          posicionCubo = Vector3Add(posicionCubo, {0, 1, 0}); // Posicion actual, la desplazamos  
+    }
 
-        // =========================================================================
+    // =========================================================================
         // 2. SECCIÓN DE ACTUALIZACIÓN (Cálculos, físicas y lógica)
         // =========================================================================
 
         // =========================================================================
-        // 3. SECCIÓN DE RENDERIZADO (Dibujar todo en pantalla)
+        // 3. SECCIÓN DE RENDERIZADO (Dibujar todo en pantalla)aa
         // =========================================================================
         BeginDrawing();
 
@@ -58,7 +85,7 @@ int main()
         // Inicio del espacio de dibujo 3D
         BeginMode3D(camera);
         // Dibuja el cubo utilizando las constantes definidas
-        DrawCube(CUBE_POSITION, CUBE_SIZE, CUBE_SIZE, CUBE_SIZE, RED);
+        DrawCube(posicionCubo, CUBE_SIZE, CUBE_SIZE, CUBE_SIZE, RED);
 
         // Dibuja la cuadrícula de guía en el suelo
         DrawGrid(GRID_SLICES, GRID_SPACING);
@@ -71,7 +98,6 @@ int main()
         // Terminar de dibujar en la ventana
         EndDrawing();
     }
-
     // Cierra la ventana y libera los recursos
     CloseWindow();
 }
