@@ -37,7 +37,7 @@ int main()
     camera.projection = CAMERA_PERSPECTIVE; // Perspectiva real: objetos lejanos se ven más pequeños
 
 
-    Jugador jugador1;
+    Jugador jugador1 = Jugador(4.0f, RED, 8.0f, CUBE_POSITION);
     
     // Establece el objetivo de fotogramas por segundo de la ventana
 
@@ -46,8 +46,7 @@ int main()
     // Objetos del entorno
     Vector3 posicionCubo = CUBE_POSITION;
     float gravedad = -0.080f;
-    float suavidadCamara = 4.0f;
-    float velocidadPersonaje = 4.0f; // 4 cuadrados por segundo
+    float suavidadCamara = 8.0f;
     float fuerzadeSalto = 4.0f;
     // TIPO VARIABLE NOMBRE;
     // TIPO VARIABLE NOMBRE = {1,2,3};
@@ -57,30 +56,46 @@ int main()
         // =========================================================================
         // 1. SECCIÓN DE ENTRADA (Capturar lo que hace el usuario)
         // =========================================================================
+      
+        Vector3 nuevaPosicion = jugador1.getPosicion();      
+      
         if (IsKeyDown(KEY_A))
         {
-            posicionCubo.x = posicionCubo.x + -1.0f * velocidadPersonaje * GetFrameTime();
-            // posicionCubo.x += velocidadPersonaje * GetFrameTime();
+            
+            nuevaPosicion.x = nuevaPosicion.x + -1.0f * jugador1.getVelocidad() * GetFrameTime();
+           
+            // posicionCubo.x += getVelocidad() * GetFrameTime();
         }
         if (IsKeyDown(KEY_D))
         {
-            // posicionCubo = Vector3Add(posicionCubo, {1.0f, 0.0f, 0.0f}); // Posicion actual, la desplazamos
-            posicionCubo.x = posicionCubo.x + 1.0f * velocidadPersonaje * GetFrameTime();
+            // posicionCubo = Vector3Add(posicionCubo, {1.0f, 0.0f, 0.0f}); // Posicion actual, la desplazamos  
+          
+            nuevaPosicion.x = nuevaPosicion.x + 1.0f * jugador1.getVelocidad() * GetFrameTime();
+           
+      
         }
 
         if (IsKeyDown(KEY_W))
         {
-            posicionCubo.z = posicionCubo.z + -1.0f * velocidadPersonaje * GetFrameTime(); // Posicion actual, la desplazamos
+           
+          
+            nuevaPosicion.z = nuevaPosicion.z + -1.0f * jugador1.getVelocidad() * GetFrameTime();
+         
         }
+
         if (IsKeyDown(KEY_S))
         {
-            posicionCubo.z = posicionCubo.z + 1.0f * velocidadPersonaje * GetFrameTime(); // Posicion actual, la desplazamos
+          
+            nuevaPosicion.z = nuevaPosicion.z + 1.0f * jugador1.getVelocidad() * GetFrameTime();
+            
         }
         if (IsKeyPressed(KEY_SPACE))
         {
-            posicionCubo.y = posicionCubo.y + 1.0f * fuerzadeSalto; // Posicion actual, la desplazamos
+            posicionCubo = Vector3Add(posicionCubo, {0.0f, 1.0f, 0.0f}); // Posicion actual, la desplazamos
+       
+       
         }
-
+        jugador1.setPosicion(nuevaPosicion);
         // =========================================================================
         // 2. SECCIÓN DE ACTUALIZACIÓN (Cálculos, físicas y lógica)
         // =========================================================================
@@ -95,10 +110,10 @@ int main()
             posicionCubo.y = CUBE_SIZE / 2;
         }
 
-        camera.target = Vector3Lerp(camera.target, posicionCubo, suavidadCamara * GetFrameTime());
+        camera.target = Vector3Lerp(camera.target, jugador1.getPosicion(), suavidadCamara * GetFrameTime());
         // camera.position = Vector3Add(posicionCubo, INITIAL_CAMERA_POSITION);
 
-        camera.position = Vector3Lerp(camera.position, Vector3Add(posicionCubo, INITIAL_CAMERA_POSITION), suavidadCamara * GetFrameTime());
+        camera.position = Vector3Lerp(camera.position, Vector3Add(jugador1.getPosicion(), INITIAL_CAMERA_POSITION), suavidadCamara * GetFrameTime());
 
         // =========================================================================
         // 3. SECCIÓN DE RENDERIZADO (Dibujar todo en pantalla)
@@ -110,7 +125,7 @@ int main()
         // Inicio del espacio de dibujo 3D
         BeginMode3D(camera);
         // Dibuja el cubo utilizando las constantes definidas
-        DrawCube(posicionCubo, CUBE_SIZE, CUBE_SIZE, CUBE_SIZE, RED);
+        DrawCube(jugador1.getPosicion(), CUBE_SIZE, CUBE_SIZE, CUBE_SIZE, jugador1.getColor());
 
         // Dibuja la cuadrícula de guía en el suelo
         DrawGrid(GRID_SLICES, GRID_SPACING);
